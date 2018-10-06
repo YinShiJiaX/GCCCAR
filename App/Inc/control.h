@@ -4,20 +4,20 @@
 #include "common.h"
 
 /* 
- *¶¨Òåµç»ú¶Ë¿Ú(PTC1~PTC4)
- *¶¨Òåµç»ú¹¤×÷ÆµÂÊ
+ *å®šä¹‰ç”µæœºç«¯å£(PTC1~PTC4)
+ *å®šä¹‰ç”µæœºå·¥ä½œé¢‘ç‡
  */
 #define MOTOR_FTM   FTM0
 #define MOTOR1_PWM  FTM_CH0
 #define MOTOR2_PWM  FTM_CH1
 #define MOTOR3_PWM  FTM_CH2
 #define MOTOR4_PWM  FTM_CH3
-#define MOTOR_HZ    (10*1000)	/* »¬ĞĞÄ£Ê½ÏÂ£¬ÆµÂÊÓ¦¸ÃÊÇ 30~100¡£ ³£¹æÄ£Ê½ÏÂ£¬ÆµÂÊÓ¦¸ÃÊÇ 20k ×óÓÒ */
+#define MOTOR_HZ    (10*1000)	/* æ»‘è¡Œæ¨¡å¼ä¸‹ï¼Œé¢‘ç‡åº”è¯¥æ˜¯ 30~100ã€‚ å¸¸è§„æ¨¡å¼ä¸‹ï¼Œé¢‘ç‡åº”è¯¥æ˜¯ 20k å·¦å³ */
 
 /* 
- *¶¨Òå¶æ»ú¶Ë¿Ú(PTB0) 
- *¶æ»úÆµÂÊ 100(HZ)
- *8420(ĞÂ°å×Ó),8550(»µ°å×Ó)
+ *å®šä¹‰èˆµæœºç«¯å£(PTB0) 
+ *èˆµæœºé¢‘ç‡ 100(HZ)
+ *8420(æ–°æ¿å­),8550(åæ¿å­)
  */
 #define S_D5_FTM FTM1 
 #define S_D5_CH  FTM_CH0
@@ -33,19 +33,19 @@ extern uchar Stop_Flag;
 extern uchar BangBang_Flag;
 extern char Set;
 extern int32 S_D5_Duty;
-/* Ä¿±êµãºá×ø±ê */
+/* ç›®æ ‡ç‚¹æ¨ªåæ ‡ */
 extern uint8   Point_Mid;
-/* Õı½»½âÂëÂö³å¼ÆÊı£¬±ØĞëÎª int32 £¡£¡£¡ */
+/* æ­£äº¤è§£ç è„‰å†²è®¡æ•°ï¼Œå¿…é¡»ä¸º int32 ï¼ï¼ï¼ */
 extern int32 Pulses_Count;
 
 
-/* µç»úËÙ¶È²âÁ¿ */
+/* ç”µæœºé€Ÿåº¦æµ‹é‡ */
 void speed_measure();
-/* ÆğÅÜÏß¼ì²âÓëÍ£³µ¿ØÖÆ */
+/* èµ·è·‘çº¿æ£€æµ‹ä¸åœè½¦æ§åˆ¶ */
 void Start_Control(void);
-/* ÔöÁ¿Ê½PIDµ÷¿Øµç»úËÙ¶È */
+/* å¢é‡å¼PIDè°ƒæ§ç”µæœºé€Ÿåº¦ */
 void MOTOR_Control(void);
-/* ÏŞ·ù±£»¤ */
+/* é™å¹…ä¿æŠ¤ */
 int32 range_protect(int32 duty, int32 min, int32 max); 
 
 #endif /* __CONTROL_H__ */

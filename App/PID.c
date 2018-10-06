@@ -1,18 +1,18 @@
 #include "PID.h"
 
 
-/* ¶¨Òå¶æ»úºÍµç»úµÄPID²ÎÊý½á¹¹Ìå */
+/* å®šä¹‰èˆµæœºå’Œç”µæœºçš„PIDå‚æ•°ç»“æž„ä½“ */
 PID S_D5_PID, MOTOR_PID;
-/* ¶æ»úPID,PID µÄ I ÏîÃ»ÓÐÊ¹ÓÃ£¬Ö»ÓÃ PD6´Ë´¦ I ½ö×÷ÎªËÙ¶ÈÄ£Ê½µÄ±êºÅ£¬¶ÔPIDÎÞÓ°Ïì */	
+/* èˆµæœºPID,PID çš„ I é¡¹æ²¡æœ‰ä½¿ç”¨ï¼Œåªç”¨ PD6æ­¤å¤„ I ä»…ä½œä¸ºé€Ÿåº¦æ¨¡å¼çš„æ ‡å·ï¼Œå¯¹PIDæ— å½±å“ */	
 int32 S_D5[10][4] = {{37, 0, 15, 16},{ 20, 1, 0, 19}, {24, 2, 15, 28}, {24, 3, 22, 14}, {20, 4, 25, 14}, {24, 5, 24, 13}, {26, 6, 18 , 13}, {25, 7, 27, 14}, {29,8,35,13}};
 
 									
 
 
 
-float   MOTOR[3] = {5, 0.4, 0};	//µç»úPID
+float   MOTOR[3] = {5, 0.4, 0};	//ç”µæœºPID
 /* 
- *Î»ÖÃÊ½PID²ÎÊý³õÊ¼»¯
+ *ä½ç½®å¼PIDå‚æ•°åˆå§‹åŒ–
  */
 void 
 PlacePID_Init(PID *sptr)
@@ -22,7 +22,7 @@ PlacePID_Init(PID *sptr)
 	sptr->PrevError = 0;	//Error[-2]
 }
 /* 
- *ÔöÁ¿Ê½PID²ÎÊý³õÊ¼»¯
+ *å¢žé‡å¼PIDå‚æ•°åˆå§‹åŒ–
  */
 void 
 IncPID_Init(PID *sptr)
@@ -33,12 +33,12 @@ IncPID_Init(PID *sptr)
 	sptr->LastSpeed = 0;
 }
 /* 
- *Î»ÖÃÊ½PID¶æ»ú¿ØÖÆ
+ *ä½ç½®å¼PIDèˆµæœºæŽ§åˆ¶
  */
 int32 
 PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 {
-	/* ²îËÙ¹ÕÍä */
+	/* å·®é€Ÿæ‹å¼¯ */
 	//DIFFSPEED;
   if(Point >= 50)
   {
@@ -49,45 +49,45 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
   {
       ftm_pwm_init(FTM0, FTM_CH0, 10*1000, 14);
   }
-	/* µ±Ç°Îó²î */
+	/* å½“å‰è¯¯å·® */
 	register int32 iError;	
-	/* ×îºóµÃ³öµÄÊµ¼ÊÊä³öÖµ */
+	/* æœ€åŽå¾—å‡ºçš„å®žé™…è¾“å‡ºå€¼ */
 	register int32 Actual;
-	/* ¶¯Ì¬P */
+	/* åŠ¨æ€P */
 	float Kp;		
 	
-	/* ¼ÆËãµ±Ç°Îó²î */
+	/* è®¡ç®—å½“å‰è¯¯å·® */
 	iError = SetPoint - NowPiont;	
 
-	/*Kp = 1.0 * (iError*iError) / S_D5[Set][KT] + S_D5[Set][KP];	//kPÖµÓë²îÖµ³É¶þ´Îº¯Êý¹ØÏµ 
-	Actual = Kp * iError + S_D5[Set][KD] * (iError - sprt->LastError);//Ö»ÓÃPD 
+	/*Kp = 1.0 * (iError*iError) / S_D5[Set][KT] + S_D5[Set][KP];	//kPå€¼ä¸Žå·®å€¼æˆäºŒæ¬¡å‡½æ•°å…³ç³» 
+	Actual = Kp * iError + S_D5[Set][KD] * (iError - sprt->LastError);//åªç”¨PD 
 
-	/* ¸üÐÂÉÏ´ÎÎó²î */
+	/* æ›´æ–°ä¸Šæ¬¡è¯¯å·® */
 	sprt->LastError = iError;
     Actual = iError*9;
 	
 	return  S_D5_MID - Actual; 
 }
 /*
- *ÔöÁ¿´®¼¶PIDµç»ú¿ØÖÆ
+ *å¢žé‡ä¸²çº§PIDç”µæœºæŽ§åˆ¶
  */
 int32 
 PID_Cascade(PID *sptr, int32 ActualSpeed, int32 SetSpeed)
 {
-	 /* µ±Ç°Îó²î */
+	 /* å½“å‰è¯¯å·® */
 	register int32 iError;
-	/* ×îºóµÃ³öµÄÊµ¼ÊÔöÁ¿ */
+	/* æœ€åŽå¾—å‡ºçš„å®žé™…å¢žé‡ */
 	register int32 Increase;	
-	/* ¼ÆËãµ±Ç°Îó²î */
+	/* è®¡ç®—å½“å‰è¯¯å·® */
 	iError = SetSpeed - ActualSpeed;
 	
-	Increase = - MOTOR[KP] * (ActualSpeed - sptr->LastSpeed)	//¼ÓËÙ¶È
+	Increase = - MOTOR[KP] * (ActualSpeed - sptr->LastSpeed)	//åŠ é€Ÿåº¦
 			   + MOTOR[KI] * iError
 			   + MOTOR[KD] * (iError - 2 * sptr->LastError + sptr->PrevError);
 	
-	sptr->PrevError = sptr->LastError;	//¸üÐÂÇ°´ÎÎó²î
-	sptr->LastError = iError;		  	//¸üÐÂÉÏ´ÎÎó²î
-	sptr->LastSpeed = ActualSpeed;		//¸üÐÂÉÏ´ÎËÙ¶È
+	sptr->PrevError = sptr->LastError;	//æ›´æ–°å‰æ¬¡è¯¯å·®
+	sptr->LastError = iError;		  	//æ›´æ–°ä¸Šæ¬¡è¯¯å·®
+	sptr->LastSpeed = ActualSpeed;		//æ›´æ–°ä¸Šæ¬¡é€Ÿåº¦
 	
 	if (iError < -100)
 	{
@@ -111,23 +111,23 @@ PID_Cascade(PID *sptr, int32 ActualSpeed, int32 SetSpeed)
 }	
 
 /*
- *ÔöÁ¿Ê½PIDµç»ú¿ØÖÆ
+ *å¢žé‡å¼PIDç”µæœºæŽ§åˆ¶
  */
 int32 
 PID_Realize(PID *sptr, int32 ActualSpeed, int32 SetSpeed)
 {
-	//µ±Ç°Îó²î£¬¶¨ÒåÎª¼Ä´æÆ÷±äÁ¿£¬Ö»ÄÜÓÃÓÚÕûÐÍºÍ×Ö·ûÐÍ±äÁ¿£¬Ìá¸ßÔËËãËÙ¶È
-	register int32 iError,	    //µ±Ç°Îó²î
-					Increase;	//×îºóµÃ³öµÄÊµ¼ÊÔöÁ¿
+	//å½“å‰è¯¯å·®ï¼Œå®šä¹‰ä¸ºå¯„å­˜å™¨å˜é‡ï¼Œåªèƒ½ç”¨äºŽæ•´åž‹å’Œå­—ç¬¦åž‹å˜é‡ï¼Œæé«˜è¿ç®—é€Ÿåº¦
+	register int32 iError,	    //å½“å‰è¯¯å·®
+					Increase;	//æœ€åŽå¾—å‡ºçš„å®žé™…å¢žé‡
 	
-	iError = SetSpeed - ActualSpeed;//¼ÆËãµ±Ç°Îó²î
+	iError = SetSpeed - ActualSpeed;//è®¡ç®—å½“å‰è¯¯å·®
 	
 	Increase = MOTOR[KP] * (iError - sptr->LastError)
 			 + MOTOR[KI] * iError
 			 + MOTOR[KD] * (iError - 2 * sptr->LastError + sptr->PrevError);
 	
-	sptr->PrevError = sptr->LastError;	//¸üÐÂÇ°´ÎÎó²î
-	sptr->LastError = iError;		  	//¸üÐÂÉÏ´ÎÎó²î
+	sptr->PrevError = sptr->LastError;	//æ›´æ–°å‰æ¬¡è¯¯å·®
+	sptr->LastError = iError;		  	//æ›´æ–°ä¸Šæ¬¡è¯¯å·®
 	
 	if (iError < -70)
 	{

@@ -1,4 +1,4 @@
-#ifndef __PID_H__
+ï»¿#ifndef __PID_H__
 #define __PID_H__
 #include "include.h"
 #include "common.h"
@@ -20,31 +20,31 @@
 
 typedef struct PID
 {
-	/* Îó²îÀÛ¼Æ */
+	/* è¯¯å·®ç´¯è®¡ */
 	long SumError;		
-	/*ÉÏ´ÎÎó²î*/
+	/*ä¸Šæ¬¡è¯¯å·®*/
 	int32 LastError;	//Error[-1]
-	/* ÉÏÉÏ´ÎÎó²î */
+	/* ä¸Šä¸Šæ¬¡è¯¯å·® */
 	int32 PrevError;	//Error[-2]	
-	/* ÉÏ´ÎËÙ¶È */
+	/* ä¸Šæ¬¡é€Ÿåº¦ */
 	int32 LastSpeed;	//Speed[-1]
 } PID;
-/* ¶¨Òå¶æ»úºÍµç»úµÄPID²ÎÊı½á¹¹Ìå */
+/* å®šä¹‰èˆµæœºå’Œç”µæœºçš„PIDå‚æ•°ç»“æ„ä½“ */
 extern PID S_D5_PID, MOTOR_PID;
 
-/* Î»ÖÃÊ½PID²ÎÊı³õÊ¼»¯ */
+/* ä½ç½®å¼PIDå‚æ•°åˆå§‹åŒ– */
 void PlacePID_Init(PID *sptr);
 
-/* ÔöÁ¿Ê½PID²ÎÊı³õÊ¼»¯ */
+/* å¢é‡å¼PIDå‚æ•°åˆå§‹åŒ– */
 void IncPID_Init(PID *sptr);
 
-/* Î»ÖÃÊ½PID¶æ»ú¿ØÖÆ */
+/* ä½ç½®å¼PIDèˆµæœºæ§åˆ¶ */
 int32 PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint);
 
-/*ÔöÁ¿Ê½´®¼¶PID¿ØÖÆ */
+/*å¢é‡å¼ä¸²çº§PIDæ§åˆ¶ */
 int32 PID_Cascade(PID *sprt, int32 NowPiont, int32 SetPoint);
 
-/* ÔöÁ¿Ê½PID¿ØÖÆ */
+/* å¢é‡å¼PIDæ§åˆ¶ */
 int32 PID_Realize(PID *sptr, int32 ActualSpeed, int32 SetSpeed);
 
 #endif /* __PID_H__ */
