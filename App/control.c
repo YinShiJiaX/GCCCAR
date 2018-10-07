@@ -1,5 +1,4 @@
-#include "Control.h"
-#include "math.h"
+#include "include.h"
 
 uchar   BangBang_Flag = 0;
 uchar 	Run_Flag = 0;

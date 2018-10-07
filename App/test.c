@@ -1,6 +1,5 @@
 
 #include "include.h"
-#include "test.h"
 void LED_TEST(void)
 {
     gpio_init(PTC16,GPO,1);                         //初始化LED0  ，灭

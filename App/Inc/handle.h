@@ -1,7 +1,7 @@
 #ifndef __HANDLE_H__
 #define __HANDLE_H__
 #include "include.h"
-#include "VCAN_OV7725_Eagle.h"
+
 
 extern uint8 screen_mid;
 extern uchar Foresight;

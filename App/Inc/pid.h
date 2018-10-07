@@ -1,4 +1,4 @@
-﻿#ifndef __PID_H__
+#ifndef __PID_H__
 #define __PID_H__
 #include "include.h"
 #include "common.h"

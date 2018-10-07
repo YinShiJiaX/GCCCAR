@@ -16,6 +16,8 @@
 
 //SysTick 计数时间太短，不宜用于 计时，因而不加入 计时功能
 
+#ifndef _SYSTIC_H_
+#define _SYSTIC_H_
 #define     SYSTICK_CLK_KHZ                 core_clk_khz
 
 
@@ -33,3 +35,4 @@ extern void systick_timing(uint32 time);
 #define systick_timing_ns(ns)               systick_timing(ns * SYSTICK_CLK_KHZ/1000000);//延时 ns
 
 
+#endif /* _SYSTIC_H_ */

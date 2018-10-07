@@ -1,7 +1,7 @@
 #ifndef __CONTROL_H__
 #define __CONTROL_H__
 #include "include.h"
-#include "common.h"
+//#include "common.h"
 
 /* 
  *定义电机端口(PTC1~PTC4)
@@ -33,10 +33,7 @@ extern uchar Stop_Flag;
 extern uchar BangBang_Flag;
 extern char Set;
 extern int32 S_D5_Duty;
-/* 目标点横坐标 */
-extern uint8   Point_Mid;
-/* 正交解码脉冲计数，必须为 int32 ！！！ */
-extern int32 Pulses_Count;
+extern int32 Pulses_Count;/* 正交解码脉冲计数，必须为 int32 ！！！ */
 
 
 /* 电机速度测量 */

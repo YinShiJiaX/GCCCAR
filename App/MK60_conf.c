@@ -13,13 +13,7 @@
  * @version    v5.1
  * @date       2013-06-26
  */
-
-#include    "common.h"
-#include    "stdio.h"
-#include    "MK60_uart.h"
-#include    "VCAN_KEY.h"
-#include    "VCAN_LED.h"
-#include    "MK60_flash.h"
+#include "include.h"
 
 
 /*!
