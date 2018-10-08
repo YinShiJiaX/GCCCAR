@@ -23,7 +23,7 @@ void MOTOR_TEST(void)
 void UART_TEST(void)
 {
     uart_init(UART5,115200);
-    uart_putstr(UART5,"Xiaxiaoyue");
+    uart_putstr(UART5,"Yinshijia");
     set_vector_handler(UART5_RX_TX_VECTORn,uart5_handler);
     uart_rx_irq_en(UART5);
 }
