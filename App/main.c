@@ -54,7 +54,7 @@ main()
       img_extract(img, imgbuff, CAMERA_SIZE);
       /* 图像分析，得到中点数量 */
       Mid_Count = Image_GetLine(img);
-      /* 使用加权平均或取目标点横坐标 */	
+      /* 使用加权平均获取目标点横坐标 */	
       Point = Point_Weight();
       /*
       sprintf(Pointstr,"%d  ", Point);

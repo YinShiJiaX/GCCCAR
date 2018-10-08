@@ -92,8 +92,7 @@ uchar Image_GetLine(uchar *data)	//获取左中右边界线
 				{
 					Traversal_Left_Side(59, data);	//重新使用边界扫描
 					Traversal_Right_Side(59, data);
-				}
-				
+				}				
 				continue;
 			}
 			else	//到达尽头

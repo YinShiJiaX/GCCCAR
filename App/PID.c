@@ -54,7 +54,7 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 	/* 最后得出的实际输出值 */
 	register int32 Actual;
 	/* 动态P */
-	float Kp;		
+	//float Kp;		
 	
 	/* 计算当前误差 */
 	iError = SetPoint - NowPiont;	

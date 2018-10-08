@@ -7,17 +7,6 @@
 #define KI 1
 #define KD 2
 #define KT 3
-
-#define DIFFSPEED	if(Point >= 50)\
-    				{\
-        				ftm_pwm_init(FTM0, FTM_CH0, 10*1000, 25);\
-    					Point += 10;\
-    				}\
-    				else\
-    				{\
-        				ftm_pwm_init(FTM0, FTM_CH0, 10*1000, 13);\
-    				}
-
 typedef struct PID
 {
 	/* 误差累计 */
