@@ -47,9 +47,9 @@
 /*
  * 定义 PLL 超频 频率
  */
-#define CORE_CLK                PLL96       // 从 PLL_e 里选择 已提供的 配置方案
-                                            // bus 、 flex bus 、 flash 频率 都是 core 整数倍分频而来
-#define MAX_BUS_CLK             48          // bus      (bus        >= core/16  )
+#define CORE_CLK                PLL96       // 从 PLL_e 里选择 已提供的 配置方案  //96
+                                            // bus 、 flex bus 、 flash 频率 都是 core 整数倍分频而来   //48
+#define MAX_BUS_CLK             46          // bus      (bus        >= core/16  )
 #define MAX_FLEXBUS_CLK         25          // flex bus (flex bus   >= core/16  )
 #define MAX_FLASH_CLK           25          // flash    (flash      >= core/16  )
 

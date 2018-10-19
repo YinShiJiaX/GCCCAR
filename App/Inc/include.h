@@ -28,6 +28,7 @@
 #include  "VCAN_OV7725_REG.h"
 #include  "VCAN_LED.H"          
 #include  "VCAN_KEY.H"
+#include  "oled.h"
 
 /* 
  *多功能调试助手 

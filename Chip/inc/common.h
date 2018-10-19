@@ -22,7 +22,9 @@
  */
 typedef unsigned char       uchar;
 typedef unsigned char       uint8;  /*  8 bits */
+typedef unsigned char       u8; 
 typedef unsigned short int  uint16; /* 16 bits */
+typedef unsigned short int  u16; /* 16 bits */
 typedef unsigned long int   uint32; /* 32 bits */
 typedef unsigned long long  uint64; /* 64 bits */
 

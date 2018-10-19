@@ -1,16 +1,18 @@
 #include "include.h"
 
 uchar   BangBang_Flag = 0;
-uchar 	Run_Flag = 0;
-int32   RC_Get = 1500;//遥控器的通道值
-uchar   Game_End = 1;
-uchar   Stop_Flag = 1;
-int16   Max_Speed = 300;
-int32   MOTOR_Duty = 0;
-int32   MOTOR_Speed = 0;
-int32   Pulses_Count = 0;/* 正交解码脉冲计数，必须为 int32 ！！！ */
-int32   S_D5_Duty = 8420;
-char    Set = 7;
+uchar 	Run_Flag      = 0;
+int32   RC_Get        = 1500;			/* 遥控器的通道值 */
+uchar   Game_End      = 1;
+uchar   Stop_Flag     = 1;
+int16   Max_Speed     = 300;
+int32   MOTOR_Duty1   = 15;
+int32   MOTOR_Duty2   = 15;
+int32   MOTOR_Duty    = 0;
+int32   MOTOR_Speed   = 0;
+int32   Pulses_Count  = 0;		/* 正交解码脉冲计数，必须为 int32 */
+int32   S_D5_Duty     = 8420;
+char    Set           = 7;
 
 /******** 电机控制 *********/
 void MOTOR_Control(void)

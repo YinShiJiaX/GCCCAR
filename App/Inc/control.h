@@ -12,7 +12,8 @@
 #define MOTOR2_PWM  FTM_CH1
 #define MOTOR3_PWM  FTM_CH2
 #define MOTOR4_PWM  FTM_CH3
-#define MOTOR_HZ    (10*1000)	/* 滑行模式下，频率应该是 30~100。 常规模式下，频率应该是 20k 左右 */
+#define MOTOR_HZ    (8*1000)	/* 滑行模式下，频率应该是 30~100。 常规模式下，频率应该是 20k 左右 */
+
 
 /* 
  *定义舵机端口(PTB0) 
@@ -24,7 +25,8 @@
 #define S_D5_HZ  (100)
 #define S_D5_MID 8420
 								
-extern int32 MOTOR_Duty;
+extern int32 MOTOR_Duty1;
+extern int32 MOTOR_Duty2;
 extern int32 MOTOR_Speed;
 extern int32 RC_Get;
 extern uchar Run_Flag;

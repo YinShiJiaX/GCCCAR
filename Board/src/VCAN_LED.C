@@ -26,7 +26,7 @@
 /*
  * 定义LED 编号对应的管脚
  */
-PTXn_e LED_PTxn[LED_MAX] = {PTB20,PTB21,PTB22,PTB23};
+PTXn_e LED_PTxn[LED_MAX] = {PTC16,PTC17,PTC18,PTC19};
 
 
 /*!

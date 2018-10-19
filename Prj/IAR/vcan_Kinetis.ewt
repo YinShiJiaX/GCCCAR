@@ -6944,7 +6944,7 @@
       <name>$PROJ_DIR$\..\..\App\control.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\App\handle.c</name>
+      <name>$PROJ_DIR$\..\..\App\Handle.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\App\main.c</name>
@@ -6956,7 +6956,7 @@
       <name>$PROJ_DIR$\..\..\App\MK60_it.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\App\pid.c</name>
+      <name>$PROJ_DIR$\..\..\App\PID.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\App\portinit.c</name>
@@ -6967,6 +6967,9 @@
   </group>
   <group>
     <name>Board</name>
+    <file>
+      <name>$PROJ_DIR$\..\..\Board\src\OLED.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$\..\..\Board\src\VCAN_camera.c</name>
     </file>

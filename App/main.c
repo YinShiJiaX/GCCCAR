@@ -16,29 +16,18 @@
 #include "include.h"
 
 
-/* 
- * 定义存储接收图像的数组 
- * 由于鹰眼摄像头是一字节8个像素，因而需要解压为 1字节1个像素，方便处理
- * 假如需要二维数组，只需要改成 uint8 img[CAMERA_H][CAMERA_W];
- * imgbuff是采集的缓冲区，img是解压后的缓冲区。imgbuff用于采集图像，img用于图像处理.
- */
-                   
-
-
-
-
 void 
 main()
 {
+    
+    //LED_TEST();
     /* 设置中断向量表与中断服务函数的映射 */
     set_vector_handler(PORTA_VECTORn, PORTA_IRQHandler);
     set_vector_handler(DMA0_VECTORn, DMA0_IRQHandler);
-    /* 目标点横坐标 */
-    //uint8 Point = 40;
-    /* 保存识别到的中点数量 */
-    //uint8 Mid_Count;
     /* 电机、舵机初始化 */  
     motorinit();
+    /*OLED_Init 初始化 */
+    //OLED_Init();
     /* 摄像头初始化 */
     camera_init(imgbuff);
     /* 用来观察程序中的中间输出数据 */
@@ -57,7 +46,7 @@ main()
       /* 使用加权平均获取目标点横坐标 */	
       Point = Point_Weight();
       /*
-      sprintf(Pointstr,"%d  ", Point);
+      sprintf(Pointstr,"%d  \n", Point);
       uart_putstr(UART5,Pointstr);
       */
       /* 使用位置式PID解算,获取所需舵机占空比*/
@@ -74,9 +63,8 @@ main()
       */
       /* 修改舵机占空比 */
       ftm_pwm_duty(S_D5_FTM, S_D5_CH, S_D5_Duty);
-      /* vcan_sendimg(imgbuff,CAMERA_SIZE); */
-      
-        
+      OLED_PrintImage(img,60,80);
+      //vcan_sendimg(imgbuff,CAMERA_SIZE);
     }
 }
 

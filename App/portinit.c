@@ -25,10 +25,10 @@ motorinit(void)
 
 
     /* 电机PWM初始化 */
-    ftm_pwm_init(MOTOR_FTM, MOTOR1_PWM, MOTOR_HZ, 14);/* 左轮正转 */
+    ftm_pwm_init(MOTOR_FTM, MOTOR1_PWM, MOTOR_HZ, MOTOR_Duty1);/* 左轮正转 */
     ftm_pwm_init(MOTOR_FTM, MOTOR2_PWM, MOTOR_HZ, 0);
     ftm_pwm_init(MOTOR_FTM, MOTOR3_PWM, MOTOR_HZ, 0);/* 右轮正转 */
-    ftm_pwm_init(MOTOR_FTM, MOTOR4_PWM, MOTOR_HZ, 14);
+    ftm_pwm_init(MOTOR_FTM, MOTOR4_PWM, MOTOR_HZ, MOTOR_Duty2);
     /* 舵机PWM初始化 */
     ftm_pwm_init(S_D5_FTM,S_D5_CH,S_D5_HZ,S_D5_MID);
 }

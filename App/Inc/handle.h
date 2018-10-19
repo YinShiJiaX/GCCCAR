@@ -22,7 +22,7 @@ void First_Line_Add(uchar *data);													 //ÓÃÓÚ´¦ÀíµÚÒ»ĞĞÕÒ²»µ½µãµÄÌØÊâÇé¿
 uchar Point_Handle(void);															 //¼ÓÉÏÂ·¼çºóÖ»Ê¹ÓÃ¼òµ¥¼ÓÈ¨Ëã·¨±£Ö¤ÎÈ¶¨¹ıÍä
 uchar Point_Weight(void);															 //Ê¹ÓÃ¼ÓÈ¨Æ½¾ù»ñÈ¡Ä¿±êºá×ø±ê
 void Point_Scan(void);																 //Ñ¡È¡Ä¿±êµã
-char Error_Transform(uchar Data, uchar Set);
+char Error_Transform(uchar Data, uchar Set);                                         //ÇóÈ¡Æ«²îµÄ¾ø¶ÔÖµ
 int32 Curvature_Transform(uchar Now, uchar Point);									 //ÇúÂÊ×ª»¯£¬½á¹û·Å´ó1000±¶
 int32 Angle_Transform(uchar *data);													 //½âËãÄ¿±ê½Ç¶È
 void Mid_Filtering(uchar *data);													 //ÖĞÏßÂË²¨
