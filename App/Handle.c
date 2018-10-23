@@ -47,6 +47,7 @@ uchar Out_Side = 0;		/* 出界计数 */
 
 uchar Image_GetLine(uchar *data)	/* 获取左中右边界线 */
 {
+	PointWeightAdjust(Weight, 9, 0);
 	char i = 59;	/* i代表图像的行数 */
 	uchar Line_Count, Left_Temp, Right_Temp;
 	char temp;
@@ -1538,3 +1539,44 @@ void img_getline(uint8 *dst, uint8 *src, uint32 srclen)
     *src++ = tmpsrc;
   }
 }  /* end img_getline */
+/*************************************************************
+ *Function:PointWeightAdjust
+ *Description:Adjust the weight array
+ * - PointWeight: Original PointWeight array.
+ * - AdjustCount: The count you want to adjust.
+ * - Direction  : Adjust to Right(0) or Left(1)
+ ************************************************************/
+
+void PointWeightAdjust(uchar *PointWeight, uchar AdjustCount, uchar Direction)
+{
+    char i;
+	/* 权重数组向左调整 */
+	if(Direction == 1)
+	{
+		for(i = AdjustCount; i < 60; i++)
+		{
+			PointWeight[i] = PointWeight[i - AdjustCount];
+			
+		}
+		for(i = 0; i < AdjustCount; i++)
+		{
+			PointWeight[i] = 1;
+		}
+
+	}
+	/* 权重数组向右调整 */
+	if(Direction == 0)
+	{
+		for(i = 0; i < 60 - AdjustCount; i++)
+		{
+			PointWeight[i] = PointWeight[i + AdjustCount];
+			
+		}
+		for(i = 60 - AdjustCount; i < 60; i++)
+		{
+			PointWeight[i] = 1;
+		}
+
+	}
+	
+}

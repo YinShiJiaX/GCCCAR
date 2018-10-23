@@ -39,23 +39,24 @@ int32
 PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 {
 	/* 差速拐弯 */
-
-  if(Point >= 55)
+  if(Point >= 45)
   {
-      ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, 20);
+    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, (MOTOR_Duty2 - 5) * 1.4);
+	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2 - 5);
   }
   else
   {
-      ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1);
+    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty2);
   }
-  if(Point <= 25)
+  /*if(Point <= 35)
   {
-      ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, 20);
+    ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, 20);
+	ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1 - 5);
   }
   else
   {
-      ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
-  }
+    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1);
+  }*/
 	/* 当前误差 */
 	register int32 iError;	
 	/* 最后得出的实际输出值 */
@@ -71,7 +72,7 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 
 	/* 更新上次误差 */
 	sprt->LastError = iError;
-    Actual = iError*10;
+    Actual = iError*9;
 	
 	return  S_D5_MID - Actual; 
 }

@@ -15,7 +15,6 @@
  */
 #include "include.h"
 
-
 void 
 main()
 {
@@ -63,8 +62,8 @@ main()
       */
       /* 修改舵机占空比 */
       ftm_pwm_duty(S_D5_FTM, S_D5_CH, S_D5_Duty);
-      OLED_PrintImage(img,60,80);
-      //vcan_sendimg(imgbuff,CAMERA_SIZE);
+      //OLED_PrintImage(img,60,80);
+      vcan_sendimg(imgbuff,CAMERA_SIZE);
     }
 }
 

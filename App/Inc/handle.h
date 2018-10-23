@@ -39,7 +39,7 @@ void Traversal_Right_Side(uchar i, uchar *data);									 //从前一行右边界开始扫
 void Traversal_Side_Line(uchar i, uchar *data);										 //从两边向中间寻找边界，仅在出现干扰的情况下使用
 void Traversal_Left_Line(uchar i, uchar *data, uchar *Left_Line, uchar *Right_Line); //左遍历边界, 记录左右边界
 void Traversal_Right_Line(uchar i, uchar *data, uchar *Left_Line, uchar *Right_Line);//右遍历边界, 记录左右边界
-
+void PointWeightAdjust(uchar *PointWeight, uchar AdjustCount, uchar Direction);
 
 void img_extract(uint8 *dst, uint8 *src, uint32 srclen);                          	 //解压
 void img_recontract(uint8 *dst, uint8 *src, uint32 srclen);     					 //压缩

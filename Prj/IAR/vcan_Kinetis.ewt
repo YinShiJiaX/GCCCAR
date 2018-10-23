@@ -6968,9 +6968,6 @@
   <group>
     <name>Board</name>
     <file>
-      <name>$PROJ_DIR$\..\..\Board\src\OLED.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\..\Board\src\VCAN_camera.c</name>
     </file>
     <file>
