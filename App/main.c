@@ -23,6 +23,8 @@ main()
     /* 设置中断向量表与中断服务函数的映射 */
     set_vector_handler(PORTA_VECTORn, PORTA_IRQHandler);
     set_vector_handler(DMA0_VECTORn, DMA0_IRQHandler);
+    set_vector_handler(PORTE_VECTORn, PORTE_IRQHandler);
+    enable_irq(PORTE_IRQn);
     /* 电机、舵机初始化 */  
     motorinit();
     /*OLED_Init 初始化 */
@@ -63,7 +65,7 @@ main()
       /* 修改舵机占空比 */
       ftm_pwm_duty(S_D5_FTM, S_D5_CH, S_D5_Duty);
       //OLED_PrintImage(img,60,80);
-      vcan_sendimg(imgbuff,CAMERA_SIZE);
+      //vcan_sendimg(imgbuff,CAMERA_SIZE);
     }
 }
 

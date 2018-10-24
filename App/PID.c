@@ -72,7 +72,7 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 
 	/* 更新上次误差 */
 	sprt->LastError = iError;
-    Actual = iError*9;
+    Actual = iError*7.1;
 	
 	return  S_D5_MID - Actual; 
 }

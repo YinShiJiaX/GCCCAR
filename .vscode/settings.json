@@ -8,6 +8,7 @@
         "common.h": "c",
         "vcan_sccb.h": "c",
         "mk60_systick.h": "c",
-        "pid.h": "c"
+        "pid.h": "c",
+        "mk60_it.h": "c"
     }
 }

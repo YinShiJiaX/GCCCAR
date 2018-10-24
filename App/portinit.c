@@ -15,13 +15,17 @@ ledinit(void)
 void
 motorinit(void)
 {
+    /* 中断端口打开 */
+    port_init(PTE27, ALT1 | IRQ_FALLING | PULLUP ); 
+    //gpio_init(PTE27,GPI,0);
     /* 电机端口初始化 */
     gpio_init(PTC1,GPO,0);
     gpio_init(PTC2,GPO,0);
     gpio_init(PTC3,GPO,0);
     gpio_init(PTC4,GPO,0);
     /* 舵机端口初始化 */
-    gpio_init(PTB0,GPO,0);
+    //gpio_init(PTB0,GPO,0);
+    gpio_init(PTD4,GPO,0);
 
 
     /* 电机PWM初始化 */

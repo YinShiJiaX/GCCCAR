@@ -27,12 +27,12 @@
  * 
  */
 #include "include.h"
+
+
 void uart5_handler(void);
 void DMA0_IRQHandler(void);
 void PORTA_IRQHandler(void);
-
-
-
+void PORTE_IRQHandler(void);
 
 
 #endif  //__MK60_IT_H__

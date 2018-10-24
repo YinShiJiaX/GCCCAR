@@ -27,11 +27,43 @@ void uart5_handler(void)
 }
 void PORTA_IRQHandler(void)
 {
-    camera_vsync();
+    uint8  n = 0;    //引脚号
+    uint32 flag = PORTA_ISFR;
+    PORTA_ISFR  = ~0;                                   //清中断标志位
+
+    n = 16;                                             //场中断
+    if(flag & (1 << n))                                 //PTA29触发中断
+    {
+        camera_vsync();
+    }
+    #if 0             //鹰眼直接全速采集，不需要行中断
+    n = 17;
+    if(flag & (1 << n))                                 //PTA28触发中断
+    {
+        camera_href();
+    }
+    #endif
 }
 void DMA0_IRQHandler(void)
 {
     camera_dma();
+}
+void PORTE_IRQHandler(void)
+{
+    
+    uint8  n = 0;    //引脚号
+    n = 27;
+    if(PORTE_ISFR & (1 << n))           //PTD7 触发中断
+    {
+        PORTE_ISFR  = (1 << n);        //写1清中断标志位
+
+        /*  以下为用户任务  */
+
+        gpio_init(PTD4, GPO, 1);
+
+        /*  以上为用户任务  */
+    }
+   
 }
 
 
