@@ -361,21 +361,28 @@ char uart_querychar (UARTn_e uratn, char *ch)
  */
 char uart_querystr (UARTn_e uratn, char *str, uint32 max_len)
 {
-    uint32 i = 0;
-    while(uart_querychar(uratn, str + i)  )
+    uint32 i = 0,j;
+
+    for(j=0;j<80;j++)                 // 10000 的作用是延时，可自行根据情况修改
     {
-        if( *(str + i) == NULL )    //接收到字符串结束符
+        while(uart_querychar(uratn, str + i)  )
         {
-            return i;
-        }
+            j=0;
+            if( *(str + i) == NULL )    //接收到字符串结束符
+            {
+                return i;
+            }
 
-        i++;
-        if(i >= max_len)            //超过设定的最大值，退出
-        {
-            return i;
+            i++;
+            if(i >= max_len)            //超过设定的最大值，退出
+            {
+                *(str + i) = 0;     //确保字符串结尾是0x00
+                return i;
+            }
         }
-    };
+    }
 
+    *(str + i) = 0;                     //确保字符串结尾是0x00
     return i;
 }
 

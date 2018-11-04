@@ -2,9 +2,9 @@
 #include "include.h"
 void LED_TEST(void)
 {
-    gpio_init(PTC16,GPO,1);                         //初始化LED0  ，灭
+    gpio_init(PTC16,GPO,0);                         //初始化LED0  ，灭
     gpio_init(PTC17,GPO,0); 
-    gpio_init(PTC18,GPO,1); 
+    gpio_init(PTC18,GPO,0); 
     gpio_init(PTC19,GPO,0); 
 }
 void MOTOR_TEST(void)

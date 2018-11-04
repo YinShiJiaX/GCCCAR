@@ -15,7 +15,7 @@ ledinit(void)
 void
 motorinit(void)
 {
-    /* 中断端口打开 */
+    /* 控制舵机的中断端口打开 */
     port_init(PTE27, ALT1 | IRQ_FALLING | PULLUP ); 
     //gpio_init(PTE27,GPI,0);
     /* 电机端口初始化 */

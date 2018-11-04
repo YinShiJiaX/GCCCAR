@@ -41,12 +41,24 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 	/* 差速拐弯 */
   if(Point >= 45)
   {
-    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, (MOTOR_Duty2 - 5) * 1.4);
-	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2 - 5);
+    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, (MOTOR_Duty2 - 3) * 1.4);
+	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2 - 3);
   }
   else
   {
     ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty2);
+	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
+  }
+  if(Point <= 37)
+  {
+    Point += 8;
+    ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, (MOTOR_Duty2 - 3) * 1.2);
+	ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty2 - 3);
+  }
+  else
+  {
+    ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
+	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
   }
   /*if(Point <= 35)
   {
@@ -68,11 +80,11 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 	iError = SetPoint - NowPiont;	
 
 	/*Kp = 1.0 * (iError*iError) / S_D5[Set][KT] + S_D5[Set][KP];	//kP值与差值成二次函数关系 
-	Actual = Kp * iError + S_D5[Set][KD] * (iError - sprt->LastError);//只用PD 
-
+	Actual = Kp * iError + S_D5[Set][KD] * (iError - sprt->LastError);//只用PD */
+	Actual = iError*7.5 + 2.1 * (iError - sprt->LastError);
 	/* 更新上次误差 */
 	sprt->LastError = iError;
-    Actual = iError*7.1;
+    
 	
 	return  S_D5_MID - Actual; 
 }

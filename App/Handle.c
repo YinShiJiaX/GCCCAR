@@ -47,7 +47,7 @@ uchar Out_Side = 0;		/* 出界计数 */
 
 uchar Image_GetLine(uchar *data)	/* 获取左中右边界线 */
 {
-	PointWeightAdjust(Weight, 5, 0);
+	PointWeightAdjust(Weight, 6, 0);
 	char i = 59;	/* i代表图像的行数 */
 	uchar Line_Count, Left_Temp, Right_Temp;
 	char temp;
@@ -57,7 +57,7 @@ uchar Image_GetLine(uchar *data)	/* 获取左中右边界线 */
 	Hazard_Right_Flag = 0;
 	Left_Jam = 0;			/* 左右干扰信号清零 */
 	Right_Jam = 0;
-	Starting_Line_Flag = 0;	/* 起跑线标志位清零 */
+	//Starting_Line_Flag = 0;	/* 起跑线标志位清零 */
 	
 	Mid_Count = 0;
 	Left_Max = 2;
@@ -84,10 +84,23 @@ uchar Image_GetLine(uchar *data)	/* 获取左中右边界线 */
 	Right_Line[60]= 78;
 	Right_Line[61]= 78;
 	Right_Line[62]= 79;	/* 人为确定最下方两行图像的边界 */
+	uchar r = 0;/* 用来检测起跑线 */
 	
 	/* 只采集前40行的图像，因为太远的图像不稳定，参考价值不大 */
 	for (i = 59; i >= 20; i--)	
 	{
+		for(uchar c = 0; c <= 80; c++)
+		{
+			if(data[80*i + c] && data[80*i + c + 1] && !data[80*i + c + 2] && !data[80*i + c + 3])
+			{
+				r++;
+			}
+		}
+		if(r >= 6)
+		{
+			Starting_Line_Flag = 1;/* 检测到赛道，停车 */
+		}
+		r = 0;
 		/* 扫描每行之前都认为左右边界都需要补线 */
 		Left_Add[i] = 1;
 		Right_Add[i] = 1;
@@ -426,19 +439,7 @@ uchar Image_GetLine(uchar *data)	/* 获取左中右边界线 */
 		Starting_Line_Flag = 1;
 	}
 	/* 保存成功分析的边界的行数 */
-	Line_Count = i;
-	
-	/********** 测试 *********/
-//	save_var(VAR6, Hazard_Left_Flag);
-//	save_var(VAR6, Right_Add_Start);
-//	save_var(VAR2, Right_Add_Start);
-//	save_var(VAR2, Left_Add_Start);
-//	save_var(VAR2, Hazard_Left_Flag);
-//	save_var(VAR2, Hazard_Right_Flag);
-//	save_var(VAR2, Left_Jam);
-//	save_var(VAR2, Right_Jam);
-//	save_var(VAR2, Starting_Line_Flag);
-		
+	Line_Count = i;		
 	/* 第二轮图像处理，使用左右边界的最值将左右边界修复的更加合理 */
 	if (Right_Add_Start && Left_Add_Start && !Hazard_Left_Flag && !Hazard_Right_Flag)	//左右都需要补线且没有障碍物
 	{

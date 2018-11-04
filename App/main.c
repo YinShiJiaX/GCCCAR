@@ -27,6 +27,8 @@ main()
     enable_irq(PORTE_IRQn);
     /* 电机、舵机初始化 */  
     motorinit();
+    /*uart5 初始化*/
+    uart_init(UART5, VCAN_BAUD);
     /*OLED_Init 初始化 */
     //OLED_Init();
     /* 摄像头初始化 */
@@ -35,6 +37,7 @@ main()
     char Pointstr[10];
     char Dutystr1[10];
     char Dutystr2[10];
+    char M[10];/* 用来从上位机接受数据来控制小车速度 */
 
     while(1)
     {
@@ -64,6 +67,12 @@ main()
       */
       /* 修改舵机占空比 */
       ftm_pwm_duty(S_D5_FTM, S_D5_CH, S_D5_Duty);
+      if(Starting_Line_Flag == 1)
+      {
+        ftm_pwm_init(MOTOR_FTM, MOTOR1_PWM, MOTOR_HZ, 0);
+        ftm_pwm_init(MOTOR_FTM, MOTOR4_PWM, MOTOR_HZ, 0);
+      }
+      
       //OLED_PrintImage(img,60,80);
       //vcan_sendimg(imgbuff,CAMERA_SIZE);
     }

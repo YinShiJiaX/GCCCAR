@@ -8,6 +8,7 @@
  * 通用库头文件
  * 
  */
+#include  "stdio.h"
 #include  "math.h"
 #include  "common.h"
 #include  "MK60_gpio.h"     

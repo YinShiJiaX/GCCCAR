@@ -6,8 +6,8 @@ int32   RC_Get        = 1500;			/* 遥控器的通道值 */
 uchar   Game_End      = 1;
 uchar   Stop_Flag     = 1;
 int16   Max_Speed     = 300;
-int32   MOTOR_Duty1   = 26;
-int32   MOTOR_Duty2   = 26;
+int32   MOTOR_Duty1   = 22;
+int32   MOTOR_Duty2   = 22;
 int32   MOTOR_Duty    = 0;
 int32   MOTOR_Speed   = 0;
 int32   Pulses_Count  = 0;		/* 正交解码脉冲计数，必须为 int32 */
@@ -305,9 +305,6 @@ void Start_Control(void)
 					Run_Flag = 0;			//停车
 					Start_OK = 0;			//清除出发成功标志位
 					Ready_Stop = 0;			//清除准备停车标志位
-//					led(LED_MAX,LED_OFF);	//关闭LED指示灯
-					led(LED2,LED_OFF);		//关闭LED指示灯
-					led(LED3,LED_OFF);		//关闭LED指示灯
 				}
 			}
 		}

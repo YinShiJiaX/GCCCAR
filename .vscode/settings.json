@@ -9,6 +9,9 @@
         "vcan_sccb.h": "c",
         "mk60_systick.h": "c",
         "pid.h": "c",
-        "mk60_it.h": "c"
+        "mk60_it.h": "c",
+        "mk60_uart.h": "c",
+        "mk60_port.h": "c",
+        "mk60dz10.h": "c"
     }
 }
