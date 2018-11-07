@@ -47,7 +47,7 @@ uchar Out_Side = 0;		/* 出界计数 */
 
 uchar Image_GetLine(uchar *data)	/* 获取左中右边界线 */
 {
-	PointWeightAdjust(Weight, 6, 0);
+	PointWeightAdjust(Weight, 10, 0);
 	char i = 59;	/* i代表图像的行数 */
 	uchar Line_Count, Left_Temp, Right_Temp;
 	char temp;
@@ -96,7 +96,7 @@ uchar Image_GetLine(uchar *data)	/* 获取左中右边界线 */
 				r++;
 			}
 		}
-		if(r >= 6)
+		if(r >= 7)
 		{
 			Starting_Line_Flag = 1;/* 检测到赛道，停车 */
 		}
