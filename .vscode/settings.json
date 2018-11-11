@@ -4,7 +4,7 @@
         "test.h": "c",
         "control.h": "c",
         "mk60_lptmr.h": "c",
-        "init.h": "c",
+        "Systeminit.h": "c",
         "common.h": "c",
         "vcan_sccb.h": "c",
         "mk60_systick.h": "c",

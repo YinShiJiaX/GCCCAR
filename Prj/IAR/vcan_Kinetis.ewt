@@ -6959,7 +6959,7 @@
       <name>$PROJ_DIR$\..\..\App\PID.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\App\portinit.c</name>
+      <name>$PROJ_DIR$\..\..\App\Systeminit.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\App\test.c</name>

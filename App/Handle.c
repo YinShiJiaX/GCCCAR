@@ -1,21 +1,18 @@
 #include "include.h"
 
 uint8 colour[2] = {255, 0},black=1,white=0; //0 和 1 分别对应的颜色
-//注：山外的摄像头 0 表示 白色，1表示 黑色
 
-uchar Weight[60] = /*{1,  1,  1,  1,  1,    1,  1,  1,  1,  2,
-					3,  4,  5,  7,  9,   10, 12, 14, 16, 19,
-				   21, 20, 19, 19, 18,   15, 13, 11,  8,  6,
+uchar Weight[60] = {1,  1,  1,  2,  4,    7,  11, 15, 16, 18,
+					20, 24, 25, 27, 29,   30, 30, 30, 16, 19,
+				    15, 15, 13, 13, 12,   12, 11, 11, 8,  6,
+				    1,  1,  1,  1,  1,    1,  1,  1,  1,  1,
 				    4,  3,  3,  2,  1,    1,  1,  1,  1,  1,
-					1,  1,  1,  1,  1,    1,  1,  1,  1,  1,
-					1,  1,  1,  1,  1,    1,  1,  1,  1,  1};	//加权平均参数*/
-				   {1,  1,  1,  2,  4,    7,  11,  15,  16,  18,
-					20,  24,  25,  27,  29,   30, 30, 30, 16, 19,
-				   15, 15, 13, 13, 12,   12, 11, 11,  8,  6,
-				   1,  1,  1,  1,  1,    1,  1,  1,  1,  1,
-				   4,  3,  3,  2,  1,    1,  1,  1,  1,  1,
-				   1, 1,  1,  1,  1,    1,  1,  1,  1,  2,};	//加权平均参数
+				    1,  1,  1,  1,  1,    1,  1,  1,  1,  2,};	//加权平均参数
 
+
+float Last_Slope = 0;
+float Left_Last_Slope = 0;
+float Right_Last_Slope = 0;
 uchar Left_Line[63], Mid_Line[63], Right_Line[63];	//左中右边界线
 uchar Left_Line_New[63], Right_Line_New[63];		//边界补线的坐标
 uchar Width[61], Width_Min;							//每行赛道的宽度
@@ -34,9 +31,6 @@ uchar Hazard_Left_Flag,Hazard_Right_Flag;			//障碍物标志位
 uchar Left_Jam, Right_Jam;							//左右干扰信号
 uchar Starting_Line_Flag;							//起跑线标志位
 int32 Last_Angle = 0;
-float Last_Slope = 0;
-float Left_Last_Slope = 0;
-float Right_Last_Slope = 0;
 uint8 Point = 40;
 uint8 imgbuff[CAMERA_SIZE];                           
 uint8 img[CAMERA_W*CAMERA_H]; 
@@ -47,10 +41,10 @@ uchar Out_Side = 0;		/* 出界计数 */
 
 uchar Image_GetLine(uchar *data)	/* 获取左中右边界线 */
 {
-	PointWeightAdjust(Weight, 10, 0);
+	PointWeightAdjust(Weight, 7, 0);
 	char i = 59;	/* i代表图像的行数 */
-	uchar Line_Count, Left_Temp, Right_Temp;
 	char temp;
+	uchar Line_Count, Left_Temp, Right_Temp;
 	float Add_Slope;
 	
 	Hazard_Left_Flag = 0;	/* 左右障碍物标志位清零 */
@@ -638,8 +632,8 @@ uchar Point_Weight(void)
 			Point_Mid = Mid_Line[60-Mid_Count];
 		}
 	}
-	Foresight = 0.8 * Error_Transform(Point_Mid, 40)	//使用最远行偏差和加权偏差确定前瞻
-			  + 0.2 * Error_Transform(Point, 	 40);
+	/* 使用最远行偏差和加权偏差确定前瞻 */
+	Foresight = 0.8 * Error_Transform(Point_Mid, 40) + 0.2 * Error_Transform(Point, 40);
 	
 	return Point;
 }

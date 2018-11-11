@@ -39,36 +39,27 @@ int32
 PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 {
 	/* 差速拐弯 */
-  if(Point >= 45)
+  if(Point >= 43)
   {
-    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, (MOTOR_Duty2 - 4) * 1.8);
-	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2 - 4);
-  }
-  else
-  {
-    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty2);
-	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
-  }
-  if(Point <= 35)
-  {
-    Point -= 5;
-    ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, (MOTOR_Duty2 - 4) * 1.8);
-	ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty2 - 4);
-  }
-  else
-  {
-    ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
-	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
-  }
-  /*if(Point <= 35)
-  {
-    ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, 20);
-	ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1 - 5);
+    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, (MOTOR_Duty1 - 25) * 3.5);
+	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2 - 25);
   }
   else
   {
     ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1);
-  }*/
+	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
+  }
+  if(Point <= 37)
+  {
+    Point -= 5;
+    ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, (MOTOR_Duty2 - 25) * 3.5);
+	ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1 - 25);
+  }
+  else
+  {
+    ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
+	ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1);
+  }
 	/* 当前误差 */
 	register int32 iError;	
 	/* 最后得出的实际输出值 */
@@ -81,7 +72,7 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 
 	/*Kp = 1.0 * (iError*iError) / S_D5[Set][KT] + S_D5[Set][KP];	//kP值与差值成二次函数关系 
 	Actual = Kp * iError + S_D5[Set][KD] * (iError - sprt->LastError);//只用PD */
-	Actual = iError*10 + 27 * (iError - sprt->LastError);
+	Actual = iError*8 + 20 * (iError - sprt->LastError);
 	/* 更新上次误差 */
 	sprt->LastError = iError;
     

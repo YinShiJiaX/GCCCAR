@@ -2,6 +2,23 @@
 
 
 
+void setvector(void)
+{
+    NVIC_SetPriorityGrouping(5);            //设置优先级分组,4bit 抢占优先级,没有亚优先级
+
+	NVIC_SetPriority(PORTA_IRQn,0);         //配置优先级
+	NVIC_SetPriority(PORTE_IRQn,1);         //配置优先级
+	NVIC_SetPriority(DMA0_IRQn,2);          //配置优先级
+	NVIC_SetPriority(PIT0_IRQn,3);          //配置优先级
+	NVIC_SetPriority(PIT1_IRQn,4);          //配置优先级
+
+
+    set_vector_handler(PORTA_VECTORn, PORTA_IRQHandler);
+    set_vector_handler(DMA0_VECTORn, DMA0_IRQHandler);
+    set_vector_handler(PORTE_VECTORn, PORTE_IRQHandler);
+    enable_irq(PORTE_IRQn);
+}
+
 
 void
 ledinit(void)
@@ -17,7 +34,6 @@ motorinit(void)
 {
     /* 控制舵机的中断端口打开 */
     port_init(PTE27, ALT1 | IRQ_FALLING | PULLUP ); 
-    //gpio_init(PTE27,GPI,0);
     /* 电机端口初始化 */
     gpio_init(PTC1,GPO,0);
     gpio_init(PTC2,GPO,0);

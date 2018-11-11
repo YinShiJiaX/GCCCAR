@@ -6,8 +6,8 @@ int32   RC_Get        = 1500;			/* 遥控器的通道值 */
 uchar   Game_End      = 1;
 uchar   Stop_Flag     = 1;
 int16   Max_Speed     = 300;
-int32   MOTOR_Duty1   = 28;
-int32   MOTOR_Duty2   = 28;
+int32   MOTOR_Duty1   = 42;
+int32   MOTOR_Duty2   = 38;
 int32   MOTOR_Duty    = 0;
 int32   MOTOR_Speed   = 0;
 int32   Pulses_Count  = 0;		/* 正交解码脉冲计数，必须为 int32 */
@@ -229,9 +229,8 @@ void MOTOR_Control(void)
 		Set_Speed = 0;
 	}
 	
-		
-	MOTOR_Duty += PID_Cascade(&MOTOR_PID, MOTOR_Speed, Set_Speed);//使用串级增量式PID进行调节
-//	MOTOR_Duty = 200;
+	/* 使用串级增量式PID进行调节 */
+	MOTOR_Duty += PID_Cascade(&MOTOR_PID, MOTOR_Speed, Set_Speed);
 	
 	if ((!Run_Flag || !Set_Speed) && MOTOR_Speed > -10 && MOTOR_Speed < 10)
 	{
@@ -245,7 +244,6 @@ void MOTOR_Control(void)
 		ftm_pwm_duty(MOTOR_FTM, MOTOR2_PWM,0);	   		//占空比最大990！！！
 		ftm_pwm_duty(MOTOR_FTM, MOTOR3_PWM,MOTOR_Duty);
 		ftm_pwm_duty(MOTOR_FTM, MOTOR4_PWM,0);
-//		DataScope_Get_Channel_Data(MOTOR_Duty, 2);		//将速度写入通道 2
 	}
 	else
 	{
@@ -253,7 +251,6 @@ void MOTOR_Control(void)
 					//电机反转
 		ftm_pwm_duty(MOTOR_FTM, MOTOR1_PWM,0);	   			//占空比最大990！！！
 		ftm_pwm_duty(MOTOR_FTM, MOTOR2_PWM,-MOTOR_Duty);	//占空比最大990！！！
-//		DataScope_Get_Channel_Data(MOTOR_Duty, 2);  		//将速度写入通道 2
 	}
 //	DataScope_Get_Channel_Data( MOTOR_Speed, 1);//将速度写入通道 1
 }
@@ -267,7 +264,6 @@ void speed_measure()
 	ftm_quad_clean(FTM1);   	//正交解码寄存器清零 
 
 	MOTOR_Speed = Pulses;	//车子当前的实际速度	
-	//save_var(VAR6, MOTOR_Speed);
 	MOTOR_Control();
 }
 
@@ -327,5 +323,18 @@ range_protect(int32 duty, int32 min, int32 max)
 	else
 	{
 		return duty;
+	}
+}
+void motor_control(void)
+{
+	if(Point > 45 )
+	{
+		MOTOR_Duty1 -= 10;
+		MOTOR_Duty2 -= 10;
+	}
+	if(Point < 35)
+	{
+		MOTOR_Duty1 -= 10;
+		MOTOR_Duty2 -= 10;
 	}
 }

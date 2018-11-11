@@ -44,6 +44,8 @@ void speed_measure();
 void Start_Control(void);
 /* 增量式PID调控电机速度 */
 void MOTOR_Control(void);
+/* 电机速度控制v0.0*/
+void motor_control(void);
 /* 限幅保护 */
 int32 range_protect(int32 duty, int32 min, int32 max); 
 
