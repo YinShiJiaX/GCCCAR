@@ -6,8 +6,8 @@ int32   RC_Get        = 1500;			/* 遥控器的通道值 */
 uchar   Game_End      = 1;
 uchar   Stop_Flag     = 1;
 int16   Max_Speed     = 300;
-int32   MOTOR_Duty1   = 42;
-int32   MOTOR_Duty2   = 38;
+int32   MOTOR_Duty1   = 41;
+int32   MOTOR_Duty2   = 37;
 int32   MOTOR_Duty    = 0;
 int32   MOTOR_Speed   = 0;
 int32   Pulses_Count  = 0;		/* 正交解码脉冲计数，必须为 int32 */
@@ -17,242 +17,57 @@ char    Set           = 7;
 /******** 电机控制 *********/
 void MOTOR_Control(void)
 {
-	int32 Set_Speed;
+	int32 Set_Speed = 30;
 	uchar i;          //计数变量
 	uchar Send_Count; //串口需要发送的数据个数
+	
+	if(Point >= 39 && Point <= 41 )
+	{
+		Set_Speed = 35;
+	}
+	else if((Point >= 36 && Point < 39) || (Point > 41 && Point <= 44))
+	{
+		Set_Speed = 32;
+	}
+	else if((Point >= 30 && Point < 36) || (Point > 44 && Point <= 50))
+	{
+		Set_Speed = 30;
+	}
+	else if((Point >= 28 && Point < 30) || (Point > 50 && Point <= 52))
+	{
+		Set_Speed = 29;
+	}
+	else 
+	{
+		Set_Speed = 25;
+	}
+	
 
-	if (Run_Flag)
-	{
-		if (Set == 1)
-		{
-			Set_Speed = 140;
-		}
-		else if (Set == 2)
-		{
-			Set_Speed = 150;
-		}
-		else if (Set == 3)
-		{
-			Set_Speed = 160;
-		}
-		else if (Set == 4)
-		{
-			Set_Speed = 170;
-		}
-		else if (Set == 5)
-		{
-			if (Foresight >= 18)
-			{
-				Set_Speed = 170;
-			}
-			else if (Foresight >= 16)
-			{
-				Set_Speed = 180;
-			}
-			else if (Foresight >= 14)
-			{
-				Set_Speed = 190;
-			}
-			else if (Foresight >= 12)
-			{
-				Set_Speed = 200;
-			}
-			else if (Foresight >= 10)
-			{
-				Set_Speed = 205;
-			}
-			else if (Foresight >= 8)
-			{
-				Set_Speed = 210;
-			}
-			else if (Foresight >= 7)
-			{
-				Set_Speed = 220;
-			}
-			else if (Foresight >= 6)
-			{
-				Set_Speed = 230;
-			}
-			else if (Foresight >= 5)
-			{
-				Set_Speed = 240;
-			}
-			else
-			{
-				Set_Speed = 255;
-			}
-		}
-		else if (Set == 6)
-		{
-			if (Foresight >= 18)
-			{
-				Set_Speed = 175;
-			}
-			else if (Foresight >= 16)
-			{
-				Set_Speed = 185;
-			}
-			else if (Foresight >= 14)
-			{
-				Set_Speed = 195;
-			}
-			else if (Foresight >= 12)
-			{
-				Set_Speed = 205;
-			}
-			else if (Foresight >= 10)
-			{
-				Set_Speed = 215;
-			}
-			else if (Foresight >= 8)
-			{
-				Set_Speed = 220;
-			}
-			else if (Foresight >= 7)
-			{
-				Set_Speed = 230;
-			}
-			else if (Foresight >= 6)
-			{
-				Set_Speed = 240;
-			}
-			else if (Foresight >= 5)
-			{
-				Set_Speed = 250;
-			}
-			else
-			{
-				Set_Speed = 265;
-			}
-		}
-		else if (Set == 7)
-		{
-			if (Foresight >= 18)
-			{
-				Set_Speed = 180;
-			}
-			else if (Foresight >= 16)
-			{
-				Set_Speed = 210;
-			}
-			else if (Foresight >= 14)
-			{
-				Set_Speed = 220;
-			}
-			else if (Foresight >= 12)
-			{
-				Set_Speed = 225;
-			}
-			else if (Foresight >= 10)
-			{
-				Set_Speed = 235;
-			}
-			else if (Foresight >= 8)
-			{
-				Set_Speed = 245;
-			}
-			else if (Foresight >= 6)
-			{
-				Set_Speed = 250;
-			}
-			else if (Foresight >= 5)
-			{
-				Set_Speed = 255;
-			}
-			else if (Foresight >= 4)
-			{
-				Set_Speed = 265;
-			}
-			else
-			{
-				Set_Speed = 280;
-			}
-		}
-		else if (Set == 8)
-		{
-			if (Foresight >= 18)
-			{
-				Set_Speed = 195;
-			}
-			else if (Foresight >= 16)
-			{
-				Set_Speed = 205;
-			}
-			else if (Foresight >= 14)
-			{
-				Set_Speed = 220;
-			}
-			else if (Foresight >= 12)
-			{
-				Set_Speed = 230;
-			}
-			else if (Foresight >= 10)
-			{
-				Set_Speed = 240;
-			}
-			else if (Foresight >= 8)
-			{
-				Set_Speed = 250;
-			}
-			else if (Foresight >= 6)
-			{
-				Set_Speed = 260;
-			}
-			else if (Foresight >= 5)
-			{
-				Set_Speed = 270;
-			}
-			else if (Foresight >= 4)
-			{
-				Set_Speed = 280;
-			}
-			else
-			{
-				Set_Speed = 290;
-			}
-		}
-		else if (Set == 0)
-		{
-			if (RC_Get > 1300)
-			{
-				Set_Speed = 70 + 80 * (RC_Get - 1000) / 1000;
-			}
-			else
-			{
-				Set_Speed = 0;
-			}
-			Set_Speed = range_protect(Set_Speed, 0, 180);
-		}
-	}
-	else
-	{
-		Set_Speed = 0;
-	}
+
 	
 	/* 使用串级增量式PID进行调节 */
-	MOTOR_Duty += PID_Cascade(&MOTOR_PID, MOTOR_Speed, Set_Speed);
-	
-	if ((!Run_Flag || !Set_Speed) && MOTOR_Speed > -10 && MOTOR_Speed < 10)
+	MOTOR_Duty2 += PID_Realize(&MOTOR_PID, MOTOR_Speed, Set_Speed);
+	MOTOR_Duty1 = MOTOR_Duty2;
+	if (MOTOR_Duty1 >= 0)
 	{
-		MOTOR_Duty = 0;
-	}
-	if (MOTOR_Duty >= 0)
-	{
-		MOTOR_Duty = range_protect(MOTOR_Duty, 0, 900);	//限幅保护
-					//电机正转
-		ftm_pwm_duty(MOTOR_FTM, MOTOR1_PWM,MOTOR_Duty);	//占空比最大990！！！
-		ftm_pwm_duty(MOTOR_FTM, MOTOR2_PWM,0);	   		//占空比最大990！！！
-		ftm_pwm_duty(MOTOR_FTM, MOTOR3_PWM,MOTOR_Duty);
-		ftm_pwm_duty(MOTOR_FTM, MOTOR4_PWM,0);
+		MOTOR_Duty1 = range_protect(MOTOR_Duty1, 0, 30);	//限幅保护
+		MOTOR_Duty2 = range_protect(MOTOR_Duty2, 0, 30);	//限幅保护
+		/******************电机正转***********************************/
+		ftm_pwm_duty(MOTOR_FTM, MOTOR1_PWM, MOTOR_Duty1);//左电机正转
+		ftm_pwm_duty(MOTOR_FTM, MOTOR4_PWM, MOTOR_Duty2);//右电机正转
+		ftm_pwm_duty(MOTOR_FTM, MOTOR2_PWM,0);
+		ftm_pwm_duty(MOTOR_FTM, MOTOR3_PWM,0);
 	}
 	else
 	{
-		MOTOR_Duty = range_protect(MOTOR_Duty, -900, 0);	//限幅保护
-					//电机反转
-		ftm_pwm_duty(MOTOR_FTM, MOTOR1_PWM,0);	   			//占空比最大990！！！
-		ftm_pwm_duty(MOTOR_FTM, MOTOR2_PWM,-MOTOR_Duty);	//占空比最大990！！！
+		MOTOR_Duty1 = range_protect(MOTOR_Duty,-30, 0);	//限幅保护
+		MOTOR_Duty2 = range_protect(MOTOR_Duty,-30,0);	//限幅保护
+		/*******************电机反转***********************************/
+		ftm_pwm_duty(MOTOR_FTM, MOTOR1_PWM, 0);
+		ftm_pwm_duty(MOTOR_FTM, MOTOR4_PWM, 0);
+		ftm_pwm_duty(MOTOR_FTM, MOTOR2_PWM,-MOTOR_Duty1);//左电机反转	   			
+		ftm_pwm_duty(MOTOR_FTM, MOTOR3_PWM,-MOTOR_Duty2);//右电机反转
 	}
-//	DataScope_Get_Channel_Data( MOTOR_Speed, 1);//将速度写入通道 1
 }
 
 /******* 电机速度测量 ********/

@@ -41,7 +41,7 @@ uchar Out_Side = 0;		/* 出界计数 */
 
 uchar Image_GetLine(uchar *data)	/* 获取左中右边界线 */
 {
-	PointWeightAdjust(Weight, 7, 0);
+	PointWeightAdjust(Weight, 25, 0);
 	char i = 59;	/* i代表图像的行数 */
 	char temp;
 	uchar Line_Count, Left_Temp, Right_Temp;
@@ -633,7 +633,7 @@ uchar Point_Weight(void)
 		}
 	}
 	/* 使用最远行偏差和加权偏差确定前瞻 */
-	Foresight = 0.8 * Error_Transform(Point_Mid, 40) + 0.2 * Error_Transform(Point, 40);
+	Foresight = 0.9 * Error_Transform(Point_Mid, 40) + 0.1 * Error_Transform(Point, 40);
 	
 	return Point;
 }

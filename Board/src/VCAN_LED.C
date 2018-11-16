@@ -39,7 +39,7 @@ void    led_init(LED_e ledn)
 {
     if(ledn < LED_MAX)
     {
-        gpio_init(LED_PTxn[ledn],GPO,LED_OFF);
+        gpio_init(LED_PTxn[ledn],GPO,LED_ON);
     }
     else
     {

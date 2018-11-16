@@ -5,7 +5,7 @@
 void setvector(void)
 {
     NVIC_SetPriorityGrouping(5);            //设置优先级分组,4bit 抢占优先级,没有亚优先级
-
+  
 	NVIC_SetPriority(PORTA_IRQn,0);         //配置优先级
 	NVIC_SetPriority(PORTE_IRQn,1);         //配置优先级
 	NVIC_SetPriority(DMA0_IRQn,2);          //配置优先级
@@ -16,7 +16,14 @@ void setvector(void)
     set_vector_handler(PORTA_VECTORn, PORTA_IRQHandler);
     set_vector_handler(DMA0_VECTORn, DMA0_IRQHandler);
     set_vector_handler(PORTE_VECTORn, PORTE_IRQHandler);
+    set_vector_handler(PIT0_VECTORn ,PIT0_IRQHandler);
     enable_irq(PORTE_IRQn);
+    enable_irq (PIT0_IRQn);
+
+    /*******************初始化正交解码模块***************/
+    //ftm_quad_init(FTM2);
+    /*******************定时器初始化********************/
+    //pit_init_ms(PIT0, 100);             
 }
 
 

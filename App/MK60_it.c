@@ -69,21 +69,16 @@ void PORTE_IRQHandler(void)
 
 void PIT0_IRQHandler(void)
 {
-    int16 val;
+    int32 val;
     val = ftm_quad_get(FTM2);          //获取FTM 正交解码 的脉冲数(负数表示反方向)
-    ftm_quad_clean(FTM2);
-    char *Pointstr;
-    if(val >= 0)
-    {
-      sprintf(Pointstr,"%d  \n", val);
-      uart_putstr(UART5,Pointstr);
-    }
-    else
-    {
-      sprintf(Pointstr,"%d  \n", -val);
-      uart_putstr(UART5,Pointstr);
-    }
+    MOTOR_Speed = (val + 910)/250;
+    char Pointstr[10];
+    sprintf(Pointstr,"%d  \n", Foresight);
+    //uart_putstr(UART5,Pointstr);
 
+    //sprintf(Pointstr,"%d  \n", -val);
+    //uart_putstr(UART5,Pointstr);
+    ftm_quad_clean(FTM2);
     PIT_Flag_Clear(PIT0);       //清中断标志位
 }
 
