@@ -20,6 +20,7 @@ typedef struct PID
 } PID;
 /* 定义舵机和电机的PID参数结构体 */
 extern PID S_D5_PID, MOTOR_PID;
+extern float   MOTOR[5];
 
 /* 位置式PID参数初始化 */
 void PlacePID_Init(PID *sptr);

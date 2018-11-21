@@ -3,11 +3,13 @@
 uchar   BangBang_Flag = 0;
 uchar 	Run_Flag      = 0;
 int32   RC_Get        = 1500;			/* 遥控器的通道值 */
-uchar   Game_End      = 1;
-uchar   Stop_Flag     = 1;
+uchar   Game_End      = 0;
+uchar   Stop_Flag     = 0;
+uchar   run_Flag      = 0;
+uchar   stop_Flag     = 0;
 int16   Max_Speed     = 300;
-int32   MOTOR_Duty1   = 41;
-int32   MOTOR_Duty2   = 37;
+int32   MOTOR_Duty1   = 40;
+int32   MOTOR_Duty2   = 40;
 int32   MOTOR_Duty    = 0;
 int32   MOTOR_Speed   = 0;
 int32   Pulses_Count  = 0;		/* 正交解码脉冲计数，必须为 int32 */

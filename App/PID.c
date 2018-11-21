@@ -10,7 +10,7 @@ int32 S_D5[10][4] = {{37, 0, 15, 16},{ 20, 1, 0, 19}, {24, 2, 15, 28}, {24, 3, 2
 
 
 /* P I D 减速量，差速比 */
-static float   MOTOR[5] = {8.4, 0, 22, 20, 3};	//电机PID
+float   MOTOR[5] = {8.7, 0, 20, 27, 3.2};	//电机PID
 /* 
  *位置式PID参数初始化
  */
@@ -42,7 +42,7 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
   if(Point >= 42)
   {
     ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, (MOTOR_Duty1 - MOTOR[3])* MOTOR[4]);
-	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2 - MOTOR[4]);
+	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2 - MOTOR[3]);
   }
   else
   {

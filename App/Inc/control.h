@@ -30,6 +30,8 @@ extern int32 MOTOR_Duty2;
 extern int32 MOTOR_Speed;
 extern int32 RC_Get;
 extern uchar Run_Flag;
+extern uchar run_Flag;
+extern uchar stop_Flag;
 extern uchar Game_End;
 extern uchar Stop_Flag;
 extern uchar BangBang_Flag;
