@@ -8,8 +8,8 @@ uchar   Stop_Flag     = 0;
 uchar   run_Flag      = 0;
 uchar   stop_Flag     = 0;
 int16   Max_Speed     = 300;
-int32   MOTOR_Duty1   = 40;
-int32   MOTOR_Duty2   = 40;
+int32   MOTOR_Duty1   = 25;
+int32   MOTOR_Duty2   = 25;
 int32   MOTOR_Duty    = 0;
 int32   MOTOR_Speed   = 0;
 int32   Pulses_Count  = 0;		/* 正交解码脉冲计数，必须为 int32 */
@@ -20,56 +20,100 @@ char    Set           = 7;
 void MOTOR_Control(void)
 {
 	int32 Set_Speed = 30;
-	uchar i;          //计数变量
-	uchar Send_Count; //串口需要发送的数据个数
-	
+	/* 判断左转右转用来差速判断 */
+	Turn_Left = 0;
+	Turn_Right = 0;
 	if(Point >= 39 && Point <= 41 )
 	{
-		Set_Speed = 35;
+		Set_Speed = 60;
 	}
 	else if((Point >= 36 && Point < 39) || (Point > 41 && Point <= 44))
 	{
-		Set_Speed = 32;
+		if(Point > 40 )
+		{
+			Turn_Right = 1;
+		}
+		else
+		{
+			Turn_Left = 1;
+		}
+		Set_Speed = 30;
 	}
 	else if((Point >= 30 && Point < 36) || (Point > 44 && Point <= 50))
 	{
-		Set_Speed = 30;
+		if(Point > 40 )
+		{
+			Turn_Right = 1;
+		}
+		else
+		{
+			Turn_Left = 1;
+		}
+		Set_Speed = 28;
 	}
 	else if((Point >= 28 && Point < 30) || (Point > 50 && Point <= 52))
 	{
-		Set_Speed = 29;
+		if(Point > 40 )
+		{
+			Turn_Right = 1;
+		}
+		else
+		{
+			Turn_Left = 1;
+		}
+		Set_Speed = 26;
 	}
 	else 
 	{
-		Set_Speed = 25;
+		if(Point > 40 )
+		{
+			Turn_Right = 1;
+		}
+		else
+		{
+			Turn_Left = 1;
+		}
+		Set_Speed = 24;
 	}
-	
-
-
 	
 	/* 使用串级增量式PID进行调节 */
 	MOTOR_Duty2 += PID_Realize(&MOTOR_PID, MOTOR_Speed, Set_Speed);
 	MOTOR_Duty1 = MOTOR_Duty2;
 	if (MOTOR_Duty1 >= 0)
 	{
-		MOTOR_Duty1 = range_protect(MOTOR_Duty1, 0, 30);	//限幅保护
-		MOTOR_Duty2 = range_protect(MOTOR_Duty2, 0, 30);	//限幅保护
+		MOTOR_Duty1 = range_protect(MOTOR_Duty1, 0, 35);	//限幅保护
+		MOTOR_Duty2 = range_protect(MOTOR_Duty2, 0, 35);	//限幅保护
 		/******************电机正转***********************************/
+		if(Turn_Left == 1)
+		{
+			//MOTOR_Duty2 = (MOTOR_Duty2 + 10);
+			//MOTOR_Duty1 = MOTOR_Duty1;
+		}
+		if(Turn_Right == 1)
+		{
+			//MOTOR_Duty1 = (MOTOR_Duty1 + 10);
+			//MOTOR_Duty2 = MOTOR_Duty2;
+		}
+
 		ftm_pwm_duty(MOTOR_FTM, MOTOR1_PWM, MOTOR_Duty1);//左电机正转
 		ftm_pwm_duty(MOTOR_FTM, MOTOR4_PWM, MOTOR_Duty2);//右电机正转
 		ftm_pwm_duty(MOTOR_FTM, MOTOR2_PWM,0);
 		ftm_pwm_duty(MOTOR_FTM, MOTOR3_PWM,0);
+		
 	}
 	else
 	{
-		MOTOR_Duty1 = range_protect(MOTOR_Duty,-30, 0);	//限幅保护
-		MOTOR_Duty2 = range_protect(MOTOR_Duty,-30,0);	//限幅保护
+		
+		MOTOR_Duty1 = range_protect(MOTOR_Duty,-35, 0);	//限幅保护
+		MOTOR_Duty2 = range_protect(MOTOR_Duty,-35, 0);	//限幅保护
 		/*******************电机反转***********************************/
+
 		ftm_pwm_duty(MOTOR_FTM, MOTOR1_PWM, 0);
 		ftm_pwm_duty(MOTOR_FTM, MOTOR4_PWM, 0);
-		ftm_pwm_duty(MOTOR_FTM, MOTOR2_PWM,-MOTOR_Duty1);//左电机反转	   			
-		ftm_pwm_duty(MOTOR_FTM, MOTOR3_PWM,-MOTOR_Duty2);//右电机反转
+		ftm_pwm_duty(MOTOR_FTM, MOTOR2_PWM, MOTOR_Duty1);//左电机反转	   			
+		ftm_pwm_duty(MOTOR_FTM, MOTOR3_PWM, MOTOR_Duty2);//右电机反转	
 	}
+	
 }
 
 /******* 电机速度测量 ********/

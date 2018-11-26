@@ -10,7 +10,9 @@ int32 S_D5[10][4] = {{37, 0, 15, 16},{ 20, 1, 0, 19}, {24, 2, 15, 28}, {24, 3, 2
 
 
 /* P I D 减速量，差速比 */
-float   MOTOR[5] = {8.7, 0, 20, 27, 3.2};	//电机PID
+float   ST_MOTOR[5] = {8.5, 0, 10, 10, 2};	//舵机PID
+/* P I D 电机 */
+float   MOTOR[3] = {0.3, 0, 0};
 /* 
  *位置式PID参数初始化
  */
@@ -41,24 +43,23 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 	/* 差速拐弯 */
   if(Point >= 42)
   {
-    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, (MOTOR_Duty1 - MOTOR[3])* MOTOR[4]);
-	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2 - MOTOR[3]);
+	Point += 10;
+    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, (MOTOR_Duty2 - ST_MOTOR[3]) * ST_MOTOR[4]);
+	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2 - ST_MOTOR[3]);
   }
   else
   {
-    ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1);
-	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
-  }
-  if(Point <= 38)
-  {
-    Point -= 5;
-    ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, (MOTOR_Duty2 - MOTOR[3]) * MOTOR[4]);
-	ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1 - MOTOR[3]);
-  }
-  else
-  {
-    ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
-	ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1);
+	if(Point <= 38)
+  	{
+    	Point -= 10;
+    	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, (MOTOR_Duty2 - ST_MOTOR[3]) * ST_MOTOR[4]);
+		ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1 - ST_MOTOR[3]);
+  	}
+  	else
+  	{
+    	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, MOTOR_Duty2);
+		ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, MOTOR_Duty1);
+  	}
   }
 	/* 当前误差 */
 	register int32 iError;	
@@ -72,7 +73,7 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 
 	/*Kp = 1.0 * (iError*iError) / S_D5[Set][KT] + S_D5[Set][KP];	//kP值与差值成二次函数关系 
 	Actual = Kp * iError + S_D5[Set][KD] * (iError - sprt->LastError);//只用PD */
-	Actual = MOTOR[0] * iError +  MOTOR[1] * (sprt->LastError + sprt->PrevError) + MOTOR[2] * (iError - sprt->LastError);
+	Actual = ST_MOTOR[0] * iError +  ST_MOTOR[1] * (sprt->LastError + sprt->PrevError) + ST_MOTOR[2] * (iError - sprt->LastError);
 	/* 更新上次误差 */
 	sprt->LastError = iError;
 	sprt->PrevError = sprt->LastError;
@@ -130,16 +131,15 @@ int32
 PID_Realize(PID *sptr, int32 ActualSpeed, int32 SetSpeed)
 {
 	//当前误差，定义为寄存器变量，只能用于整型和字符型变量，提高运算速度
-	register int32 iError,	    //当前误差
-				   Increase;	//最后得出的实际增量
+	float iError;	    //当前误差
+	float Increase;	    //最后得出的实际增量
 	
 	iError = SetSpeed - ActualSpeed;//计算当前误差
-	/*
+	
 	Increase = MOTOR[KP] * (iError - sptr->LastError)
 			 + MOTOR[KI] * iError
 			 + MOTOR[KD] * (iError - 2 * sptr->LastError + sptr->PrevError);
-	*/
-	Increase = iError;
+	
 	sptr->PrevError = sptr->LastError;	//更新前次误差
 	sptr->LastError = iError;		  	//更新上次误差
 	/*

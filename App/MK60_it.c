@@ -71,13 +71,13 @@ void PIT0_IRQHandler(void)
 {
     int32 val;
     val = ftm_quad_get(FTM2);          //获取FTM 正交解码 的脉冲数(负数表示反方向)
-    MOTOR_Speed = (val + 910)/250;
-    char Pointstr[10];
-    sprintf(Pointstr,"%d  \n", Foresight);
+    MOTOR_Speed = (val + 900)/(2.3 * 250);
+    //char Pointstr[10];
+    //sprintf(Pointstr,"%d  \n", MOTOR_Speed);
     //uart_putstr(UART5,Pointstr);
-
     //sprintf(Pointstr,"%d  \n", -val);
     //uart_putstr(UART5,Pointstr);
+    MOTOR_Control();
     ftm_quad_clean(FTM2);
     PIT_Flag_Clear(PIT0);       //清中断标志位
 }

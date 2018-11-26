@@ -54,7 +54,7 @@ void EverythingInit(void)
     //ftm_quad_init(FTM2);
 
     /*******************定时器初始化********************/
-    //pit_init_ms(PIT0, 100); 
+    //pit_init_ms(PIT0, 50); 
 
     /******************************档位设置****************************************/
     gpio_init(PTD12,GPI,1);
@@ -94,4 +94,5 @@ void EverythingInit(void)
         MOTOR[3]    = 10;
     }
     */
+    
 }
