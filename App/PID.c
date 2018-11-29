@@ -10,9 +10,9 @@ int32 S_D5[10][4] = {{37, 0, 15, 16},{ 20, 1, 0, 19}, {24, 2, 15, 28}, {24, 3, 2
 
 
 /* P I D 减速量，差速比 */
-float   ST_MOTOR[5] = {8.5, 0, 10, 10, 2};	//舵机PID
+float   ST_MOTOR[5] = {8.5, 0, 10, 16, 1.7};	//舵机PID
 /* P I D 电机 */
-float   MOTOR[3] = {0.3, 0, 0};
+float   MOTOR[3] = {0, 0.013, 0};
 /* 
  *位置式PID参数初始化
  */
@@ -41,7 +41,7 @@ int32
 PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
 {
 	/* 差速拐弯 */
-  if(Point >= 42)
+  if(Point >= 44)
   {
 	Point += 10;
     ftm_pwm_init(FTM0, MOTOR1_PWM, 10*1000, (MOTOR_Duty2 - ST_MOTOR[3]) * ST_MOTOR[4]);
@@ -49,7 +49,7 @@ PlacePID_Control(PID *sprt, int32 NowPiont, int32 SetPoint)
   }
   else
   {
-	if(Point <= 38)
+	if(Point <= 36)
   	{
     	Point -= 10;
     	ftm_pwm_init(FTM0, MOTOR4_PWM, 10*1000, (MOTOR_Duty2 - ST_MOTOR[3]) * ST_MOTOR[4]);
@@ -169,7 +169,7 @@ PID_Realize(PID *sptr, int32 ActualSpeed, int32 SetSpeed)
 		Increase += 120;
 	}
 	*/
-	
+	//Increase = range_protect(Increase, -30, 30);
 	return Increase;
 }
 

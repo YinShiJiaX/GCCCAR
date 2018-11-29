@@ -32,12 +32,6 @@ void EverythingInit(void)
     /*************************舵机端口初始化***************************************/
     gpio_init(PTD4,GPO,0);
 
-    /*************************电机PWM初始化***************************************/
-    ftm_pwm_init(MOTOR_FTM, MOTOR1_PWM, MOTOR_HZ, MOTOR_Duty1);/* 左轮正转 */
-    ftm_pwm_init(MOTOR_FTM, MOTOR2_PWM, MOTOR_HZ, 0);
-    ftm_pwm_init(MOTOR_FTM, MOTOR3_PWM, MOTOR_HZ, 0);
-    ftm_pwm_init(MOTOR_FTM, MOTOR4_PWM, MOTOR_HZ, MOTOR_Duty2);
-
     /*************************舵机PWM初始化***************************************/
     ftm_pwm_init(S_D5_FTM,S_D5_CH,S_D5_HZ,S_D5_MID);
 
@@ -54,17 +48,39 @@ void EverythingInit(void)
     //ftm_quad_init(FTM2);
 
     /*******************定时器初始化********************/
-    //pit_init_ms(PIT0, 50); 
+    //pit_init_ms(PIT0, 5); 
 
     /******************************档位设置****************************************/
     gpio_init(PTD12,GPI,1);
     gpio_init(PTD13,GPI,1); 
     gpio_init(PTD14,GPI,1); 
-    gpio_init(PTD15,GPI,1);            
+    gpio_init(PTD15,GPI,1);
+    /*            
     FiveButton = FiveButton | (gpio_get(PTD12) << 3);
     FiveButton = FiveButton | (gpio_get(PTD13) << 2);
     FiveButton = FiveButton | (gpio_get(PTD14) << 1);
     FiveButton = FiveButton | (gpio_get(PTD15) << 0);
+    */
+    if(gpio_get(PTD12) == 1)
+    {
+        //MOTOR_Duty1 = 40;
+        //MOTOR_Duty2 = 40;
+        //ST_MOTOR[3] = 20;
+    }
+    else if(gpio_get(PTD13) == 1)
+    {
+        //MOTOR_Duty1 = 35;
+        //MOTOR_Duty2 = 35;
+        //ST_MOTOR[3] = 15;        
+    }
+    else
+    {
+        //MOTOR_Duty1 = 20;
+        //MOTOR_Duty2 = 20;
+        //ST_MOTOR[3] = 0;        
+
+    }
+
     /*
     switch(FiveButton)
     {
@@ -94,5 +110,10 @@ void EverythingInit(void)
         MOTOR[3]    = 10;
     }
     */
+    /*************************电机PWM初始化***************************************/
+    ftm_pwm_init(MOTOR_FTM, MOTOR1_PWM, MOTOR_HZ, MOTOR_Duty1);/* 左轮正转 */
+    ftm_pwm_init(MOTOR_FTM, MOTOR2_PWM, MOTOR_HZ, 0);
+    ftm_pwm_init(MOTOR_FTM, MOTOR3_PWM, MOTOR_HZ, 0);
+    ftm_pwm_init(MOTOR_FTM, MOTOR4_PWM, MOTOR_HZ, MOTOR_Duty2);
     
 }

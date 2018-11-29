@@ -71,7 +71,7 @@ void PIT0_IRQHandler(void)
 {
     int32 val;
     val = ftm_quad_get(FTM2);          //获取FTM 正交解码 的脉冲数(负数表示反方向)
-    MOTOR_Speed = (val + 900)/(2.3 * 250);
+    MOTOR_Speed = 4.6913 * val;//(val + 900)/(2.3 * 250);
     //char Pointstr[10];
     //sprintf(Pointstr,"%d  \n", MOTOR_Speed);
     //uart_putstr(UART5,Pointstr);

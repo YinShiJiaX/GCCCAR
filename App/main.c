@@ -29,7 +29,6 @@ main()
       if(Starting_Line_Flag == 1)
       {
         S_D5_Duty = 8420;
-        Starting_Line_Flag = 0;
         if(Run_Flag == 1)
         {
           Stop_Flag = 1;
@@ -40,18 +39,18 @@ main()
       {
         Run_Flag = 1;
       }
-      /*
+      
       if(Run_Flag == 1 && Stop_Flag == 1)
       {
         ftm_pwm_init(MOTOR_FTM, MOTOR1_PWM, MOTOR_HZ, 0);
         ftm_pwm_init(MOTOR_FTM, MOTOR4_PWM, MOTOR_HZ, 0);
-        ftm_pwm_init(MOTOR_FTM, MOTOR2_PWM, MOTOR_HZ, 7);
-        ftm_pwm_init(MOTOR_FTM, MOTOR3_PWM, MOTOR_HZ, 7); 
+        ftm_pwm_init(MOTOR_FTM, MOTOR2_PWM, MOTOR_HZ, 4);
+        ftm_pwm_init(MOTOR_FTM, MOTOR3_PWM, MOTOR_HZ, 4); 
         S_D5_Duty = 8420;
         disable_irq(PIT0_IRQn);
         Starting_Line_Flag = 0;
       }
-      */
+      
 
       /* 修改舵机占空比 */
       ftm_pwm_duty(S_D5_FTM, S_D5_CH, S_D5_Duty);
